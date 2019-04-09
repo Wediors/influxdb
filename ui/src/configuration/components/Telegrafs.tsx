@@ -8,9 +8,7 @@ import {Input, Button, EmptyState, Grid} from '@influxdata/clockface'
 import {Tabs} from 'src/clockface'
 import CollectorList from 'src/telegrafs/components/CollectorList'
 import TelegrafExplainer from 'src/telegrafs/components/TelegrafExplainer'
-import TelegrafInstructionsOverlay from 'src/telegrafs/components/TelegrafInstructionsOverlay'
 import TelegrafConfigOverlay from 'src/telegrafs/components/TelegrafConfigOverlay'
-import CollectorsWizard from 'src/dataLoaders/components/collectorsWizard/CollectorsWizard'
 import FilterList from 'src/shared/components/Filter'
 import NoBucketsWarning from 'src/organizations/components/NoBucketsWarning'
 
@@ -144,12 +142,6 @@ export class Telegrafs extends PureComponent<Props, State> {
             </Grid.Column>
           </Grid.Row>
         </Grid>
-        {this.telegrafsWizard}
-        <TelegrafInstructionsOverlay
-          visible={this.isInstructionsVisible}
-          collector={this.selectedCollector}
-          onDismiss={this.handleCloseInstructions}
-        />
         <TelegrafConfigOverlay
           visible={this.isTelegrafConfigVisible}
           onDismiss={this.handleCloseTelegrafConfig}
@@ -168,46 +160,10 @@ export class Telegrafs extends PureComponent<Props, State> {
     return false
   }
 
-  private get telegrafsWizard(): JSX.Element {
-    const {buckets} = this.props
-
-    if (this.hasNoBuckets) {
-      return
-    }
-
-    return (
-      <CollectorsWizard
-        visible={this.isDataLoaderVisible}
-        onCompleteSetup={this.handleDismissDataLoaders}
-        startingStep={0}
-        buckets={buckets}
-      />
-    )
-  }
-
-  private get selectedCollector() {
-    return this.props.telegrafs.find(c => c.id === this.state.collectorID)
-  }
-
-  private get isDataLoaderVisible(): boolean {
-    return this.state.dataLoaderOverlay === OverlayState.Open
-  }
-
-  private get isInstructionsVisible(): boolean {
-    return this.state.instructionsOverlay === OverlayState.Open
-  }
-
   private handleOpenInstructions = (collectorID: string): void => {
     this.setState({
       instructionsOverlay: OverlayState.Open,
       collectorID,
-    })
-  }
-
-  private handleCloseInstructions = (): void => {
-    this.setState({
-      instructionsOverlay: OverlayState.Closed,
-      collectorID: null,
     })
   }
 
@@ -266,10 +222,6 @@ export class Telegrafs extends PureComponent<Props, State> {
     onSetDataLoadersType(DataLoaderType.Streaming)
 
     this.setState({dataLoaderOverlay: OverlayState.Open})
-  }
-
-  private handleDismissDataLoaders = () => {
-    this.setState({dataLoaderOverlay: OverlayState.Closed})
   }
 
   private get emptyState(): JSX.Element {
