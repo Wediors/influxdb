@@ -113,8 +113,8 @@ type LabelUpdate struct {
 
 // LabelFilter represents a set of filters that restrict the returned results.
 type LabelFilter struct {
-	Name  string
-	OrgID *ID
+	Name           string
+	OrganizationID *ID
 }
 
 // LabelMappingFilter represents a set of filters that restrict the returned results.
