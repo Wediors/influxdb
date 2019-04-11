@@ -141,7 +141,7 @@ func decodeGetLabelsRequest(ctx context.Context, r *http.Request) (*getLabelsReq
 		if err != nil {
 			return nil, err
 		}
-		req.filter.OrganizationID = id
+		req.filter.OrgID = id
 	}
 
 	return req, nil
@@ -359,11 +359,11 @@ func newGetLabelsHandler(b *LabelBackend) http.HandlerFunc {
 	}
 }
 
-type getLabelsMappingRequest struct {
+type getLabelMappingsRequest struct {
 	filter influxdb.LabelMappingFilter
 }
 
-func decodeGetLabelMappingsRequest(ctx context.Context, r *http.Request, rt influxdb.ResourceType) (*getLabelsMappingRequest, error) {
+func decodeGetLabelMappingsRequest(ctx context.Context, r *http.Request, rt influxdb.ResourceType) (*getLabelMappingsRequest, error) {
 	req := &getLabelsMappingRequest{}
 
 	params := httprouter.ParamsFromContext(ctx)
