@@ -359,12 +359,12 @@ func newGetLabelsHandler(b *LabelBackend) http.HandlerFunc {
 	}
 }
 
-type getLabelsRequest struct {
+type getLabelsMappingRequest struct {
 	filter influxdb.LabelMappingFilter
 }
 
-func decodeGetLabelMappingsRequest(ctx context.Context, r *http.Request, rt influxdb.ResourceType) (*getLabelsRequest, error) {
-	req := &getLabelsRequest{}
+func decodeGetLabelMappingsRequest(ctx context.Context, r *http.Request, rt influxdb.ResourceType) (*getLabelsMappingRequest, error) {
+	req := &getLabelsMappingRequest{}
 
 	params := httprouter.ParamsFromContext(ctx)
 	id := params.ByName("id")
